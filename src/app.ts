@@ -1,5 +1,5 @@
-import Fastify from "fastify";
 import type { FastifyInstance } from 'fastify';
+import Fastify from "fastify";
 import routes = require("./routes");
 
 
