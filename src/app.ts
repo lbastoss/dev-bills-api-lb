@@ -1,7 +1,6 @@
 import type { FastifyInstance } from 'fastify';
 import Fastify from "fastify";
-import routes = require("./routes");
-
+import routes from "./routes";
 
 const app: FastifyInstance = Fastify({
     logger: true
