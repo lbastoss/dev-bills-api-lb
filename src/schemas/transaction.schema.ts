@@ -17,3 +17,21 @@ export const createTransactionSchema = z.object({
     message: "Invalid transaction type",
   }),
 });
+
+export const getTransactionsSchema = z.object({
+  month: z.string().optional(),
+  year: z.string().optional(),
+  type: z
+    .enum([TransactionType.expense, TransactionType.income], {
+      message: "Invalid transaction type",
+    })
+    .optional(),
+  categoryId: z
+    .string()
+    .refine(isValidObjectId, {
+      message: "Invalid category ID",
+    })
+    .optional(),
+});
+
+export type GetTransactionsQuery = z.infer<typeof getTransactionsSchema>;
