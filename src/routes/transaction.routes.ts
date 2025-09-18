@@ -1,6 +1,7 @@
 import type { FastifyInstance } from "fastify";
 import createTransaction from "../controllers/transactions/createTransaction.controller";
 import { getTransactions } from "../controllers/transactions/getTransaction.controller";
+import { getTransactionsSummary } from "../controllers/transactions/getTransactionSummary.controller";
 
 const transactionRoutes = async (fastify: FastifyInstance) => {
   // criação
@@ -52,6 +53,30 @@ const transactionRoutes = async (fastify: FastifyInstance) => {
       },
     },
     handler: getTransactions,
+  });
+
+  // buscar resumo
+  fastify.route({
+    method: "GET",
+    url: "/summary",
+    schema: {
+      querystring: {
+        type: "object",
+        required: ["month", "year"],
+        properties: {
+          month: {
+            type: "string",
+            pattern: "^(0?[1-9]|1[0-2])$", // validação para mes 01-12
+          },
+          year: {
+            type: "string",
+            pattern: "^[0-9]{4}$", // validação para ano com 4 dígitos
+          },
+        },
+        additionalProperties: false,
+      },
+    },
+    handler: getTransactionsSummary,
   });
 };
 export default transactionRoutes;
