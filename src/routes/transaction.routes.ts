@@ -1,5 +1,6 @@
 import type { FastifyInstance } from "fastify";
 import createTransaction from "../controllers/transactions/createTransaction.controller";
+import { deleteTransaction } from "../controllers/transactions/deleteTransaction.controller";
 import { getTransactions } from "../controllers/transactions/getTransaction.controller";
 import { getTransactionsSummary } from "../controllers/transactions/getTransactionSummary.controller";
 
@@ -78,5 +79,26 @@ const transactionRoutes = async (fastify: FastifyInstance) => {
     },
     handler: getTransactionsSummary,
   });
+
+  // deletar transação
+  fastify.route({
+    method: "DELETE",
+    url: "/:id",
+    schema: {
+      params: {
+        type: "object",
+        properties: {
+          id: {
+            type: "string",
+            pattern: "^[0-9a-fA-F]{24}$", // validação para ObjectId do MongoDB
+          },
+        },
+        required: ["id"],
+        additionalProperties: false,
+      },
+    },
+    handler: deleteTransaction,
+  });
 };
+
 export default transactionRoutes;

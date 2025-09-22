@@ -39,5 +39,12 @@ export const getTransactionsSummarySchema = z.object({
   year: z.string({ message: "Year is required" }),
 });
 
+export const deleteTransactionSchema = z.object({
+  id: z.string().refine(isValidObjectId, {
+    message: "Invalid ID",
+  }),
+});
+
 export type GetTransactionsQuery = z.infer<typeof getTransactionsSchema>;
 export type GetTransactionsSummaryQuery = z.infer<typeof getTransactionsSummarySchema>;
+export type DeleteTransactionParams = z.infer<typeof deleteTransactionSchema>;
